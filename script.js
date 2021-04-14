@@ -1,11 +1,14 @@
 const screen = document.getElementById('screen');
 const numbers = document.querySelectorAll('[data-number]');
+const operations = document.querySelectorAll('[data-operation]');
 const clearAll = document.getElementById('clear-all');
 const clearLastEntry = document.getElementById('clear-last');
 
-
+let isOn = false;
 let numberCount = 0;
 let enteredNumber = 0;
+let firstNumber = 0;
+screen.innerHTML = '0'
 
 // Add two numbers
 function add(a, b) {
@@ -52,16 +55,30 @@ function operate(a, b, operator) {
 // Display numbers on the screen
 function displayNumber() {
   const number = this.dataset.number;
+  if (numberCount === 0) screen.innerHTML = '';
 
-  if (numberCount <= 8) {
+  if (numberCount <= 9) {
     screen.innerHTML+= number;
     numberCount++;
     enteredNumber = parseInt(screen.innerHTML);
   }
-
-  console.log(`Entered number ${enteredNumber}`);
+ 
   return enteredNumber;
 }
 
+
+// Save operation type
+function saveOperation() { 
+  firstNumber = enteredNumber;
+  const operation = this.dataset.operation;  
+  enteredNumber = 0;
+  numberCount = 0; 
+  return operation;
+}
+
+
 // Event Listeners 
-numbers.forEach(number => number.addEventListener('click', displayNumber))
+numbers.forEach(number => number.addEventListener('click', displayNumber));
+operations.forEach(operation => operation.addEventListener('click', saveOperation)); 
+
+
