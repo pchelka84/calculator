@@ -69,11 +69,11 @@
 .key-container > div.multiply-btn,
 .key-container > div.subtract-btn,
 .key-container > div.add-btn {
-  background-color: rgba(63, 144, 243, 0.2);
+  background-color: rgba(99, 164, 243, 0.5);
 }
 
 .key-container > div.equal-btn {
-  background-color: rgba(229, 239, 83, 0.3);
+  background-color: rgba(238, 236, 113, 0.7);
   grid-column-start: 3;
   grid-column-end: 5;
 }
