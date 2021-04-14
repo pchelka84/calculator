@@ -85,3 +85,10 @@
   grid-column-start: 3;
   grid-column-end: 5;
 }
+
+/* Media queries */
+@media screen and (max-width: 400px) {
+  .calculator {
+    width: 300px;
+  }
+}
