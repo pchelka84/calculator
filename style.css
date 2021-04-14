@@ -77,10 +77,23 @@
   background-color: rgba(99, 164, 243, 0.5);
 }
 
+.key-container > div#clear-all:active,
+.key-container > div#clear-last:active,
+.key-container > div#divide:active,
+.key-container > div#multiply:active,
+.key-container > div#subtract:active,
+.key-container > div#add:active {
+  background-color: rgba(130, 183, 248, 0.5);
+}
+
 .key-container > div#equal {
   background-color: rgba(238, 236, 113, 0.7);
   grid-column-start: 3;
   grid-column-end: 5;
+}
+
+.key-container > div#equal:active {
+  background-color: rgba(245, 243, 157, 0.7);
 }
 
 /* Media queries */
