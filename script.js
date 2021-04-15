@@ -32,8 +32,7 @@ function multiply(a, b) {
 
 // Divide two numbers
 function divide(a, b) {
-  return (b === 0) ? screen.innerHTML=`ERR` : a/b;;
-  // console.log(a/b);
+  return (b === 0) ? screen.innerHTML=`ERR` : a/b;
 }
 
 // Calls operator function on two numbers
@@ -82,11 +81,11 @@ function displayNumber() {
 
 // Save operation type
 function saveOperation() { 
-  firstNumber = enteredNumber;
+  (!res) ? firstNumber = enteredNumber : firstNumber = res; 
   operation = this.dataset.operation;  
   enteredNumber = 0;
   digitCount = 0; 
-  console.log(`operation: ${operation}`)
+  console.log(`operation: ${operation}`);
 }
 
 
