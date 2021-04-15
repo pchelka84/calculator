@@ -94,11 +94,23 @@ function saveOperation() {
 
   console.log(`operation: ${operation}`);
 }
+
+// Clear all and start clean
+function clearAllVariables() {
+  digitCount = 0;
+  operationCount = 0;
+  enteredNumber = 0;
+  firstNumber = 0;
+  screen.innerHTML = '0';
+  operation ='';
+  res = null;
+}
  
 // Event Listeners 
 numbers.forEach(number => number.addEventListener('click', displayNumber));
 operations.forEach(operation => operation.addEventListener('click', saveOperation)); 
 equal.addEventListener('click', operate); 
+clearAll.addEventListener('click', clearAllVariables);
 
 
 
