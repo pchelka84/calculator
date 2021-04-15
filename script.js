@@ -5,7 +5,7 @@ const equal = document.getElementById('equal');
 const clearAll = document.getElementById('clear-all');
 const clearLastEntry = document.getElementById('clear-last');
 
-let numberCount = 0;
+let digitCount = 0;
 let enteredNumber = 0;
 let firstNumber = 0;
 screen.innerHTML = '0';
@@ -42,7 +42,7 @@ function operate(a, b, operator) {
   operator = operation;
 
   console.log(`first number = ${firstNumber}, second number = ${enteredNumber}, operator = ${operation}`)
-  
+
   let res;
   switch(operator) {
     case '+':
@@ -67,12 +67,12 @@ function operate(a, b, operator) {
 
 // Display numbers on the screen
 function displayNumber() {
-  const number = this.dataset.number;
-  if (numberCount === 0) screen.innerHTML = '';
+  const digit = this.dataset.number;
+  if (digitCount === 0) screen.innerHTML = '';
 
-  if (numberCount <= 9) {
-    screen.innerHTML+= number;
-    numberCount++;
+  if (digitCount <= 9) {
+    screen.innerHTML+= digit;
+    digitCount++;
     enteredNumber = parseInt(screen.innerHTML);
   }
  
@@ -85,9 +85,8 @@ function saveOperation() {
   firstNumber = enteredNumber;
   operation = this.dataset.operation;  
   enteredNumber = 0;
-  numberCount = 0; 
-  console.log(`operation - ${operation}`)
-  // return operation;
+  digitCount = 0; 
+  console.log(`operation: ${operation}`)
 }
 
 
