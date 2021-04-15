@@ -10,6 +10,7 @@ let enteredNumber = 0;
 let firstNumber = 0;
 screen.innerHTML = '0';
 let operation ='';
+let res = null;
 
 // Add two numbers
 function add(a, b) {
@@ -31,8 +32,8 @@ function multiply(a, b) {
 
 // Divide two numbers
 function divide(a, b) {
-  console.log(a/b);
-  return a/b;
+  return (b === 0) ? screen.innerHTML=`ERR` : a/b;;
+  // console.log(a/b);
 }
 
 // Calls operator function on two numbers
@@ -43,7 +44,6 @@ function operate(a, b, operator) {
 
   console.log(`first number = ${firstNumber}, second number = ${enteredNumber}, operator = ${operation}`)
 
-  let res;
   switch(operator) {
     case '+':
       res = add(a, b);
