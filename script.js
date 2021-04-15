@@ -1,14 +1,15 @@
 const screen = document.getElementById('screen');
 const numbers = document.querySelectorAll('[data-number]');
 const operations = document.querySelectorAll('[data-operation]');
+const equal = document.getElementById('equal');
 const clearAll = document.getElementById('clear-all');
 const clearLastEntry = document.getElementById('clear-last');
 
-let isOn = false;
 let numberCount = 0;
 let enteredNumber = 0;
 let firstNumber = 0;
-screen.innerHTML = '0'
+screen.innerHTML = '0';
+let operation ='';
 
 // Add two numbers
 function add(a, b) {
@@ -36,18 +37,30 @@ function divide(a, b) {
 
 // Calls operator function on two numbers
 function operate(a, b, operator) {
+  a = firstNumber;
+  b = enteredNumber;
+  operator = operation;
+
+  console.log(`first number = ${firstNumber}, second number = ${enteredNumber}, operator = ${operation}`)
+  
+  let res;
   switch(operator) {
     case '+':
-      add(a, b);
+      res = add(a, b);
+      screen.innerHTML=`${res}`;
       break;
     case '-':
-      subtract(a, b);
+      res = subtract(a, b);
+      screen.innerHTML=`${res}`; 
       break;
     case '*':
-      multiply(a, b);
+      res = multiply(a, b);
+      screen.innerHTML=`${res}`;
+
       break;
     case('/'):
-      divide(a, b);
+      res = divide(a, b);
+      screen.innerHTML=`${res}`;
       break; 
   } 
 }
@@ -70,15 +83,17 @@ function displayNumber() {
 // Save operation type
 function saveOperation() { 
   firstNumber = enteredNumber;
-  const operation = this.dataset.operation;  
+  operation = this.dataset.operation;  
   enteredNumber = 0;
   numberCount = 0; 
-  return operation;
+  console.log(`operation - ${operation}`)
+  // return operation;
 }
 
 
 // Event Listeners 
 numbers.forEach(number => number.addEventListener('click', displayNumber));
 operations.forEach(operation => operation.addEventListener('click', saveOperation)); 
+equal.addEventListener('click', operate);
 
 
