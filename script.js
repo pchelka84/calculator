@@ -33,7 +33,14 @@ function multiply(a, b) {
 
 // Divide two numbers
 function divide(a, b) {
-  return (b === 0) ? screen.innerHTML=`ERR` : a/b;
+  // return (b === 0) ? screen.innerHTML=`ERR` : (a % b !== 0) ? (a/b).toFixed(2) : a / b; 
+
+  if (b === 0) {
+    digitCount = 0;  
+    return screen.innerHTML=`ERR`;  
+  } else {
+    return a % b !== 0 ? (a/b).toFixed(2) : a / b;
+  } 
 }
 
 // Calls operator function on two numbers
