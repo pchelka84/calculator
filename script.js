@@ -6,6 +6,7 @@ const clearAll = document.getElementById('clear-all');
 const clearLastEntry = document.getElementById('clear-last');
 
 let digitCount = 0;
+let operationCount = 0;
 let enteredNumber = 0;
 let firstNumber = 0;
 screen.innerHTML = '0';
@@ -41,27 +42,25 @@ function operate(a, b, operator) {
   b = enteredNumber;
   operator = operation;
 
-  console.log(`first number = ${firstNumber}, second number = ${enteredNumber}, operator = ${operation}`)
+  console.log(`Operate: first number = ${firstNumber}, second number = ${enteredNumber}, operator = ${operation}`)
 
   switch(operator) {
     case '+':
       res = add(a, b);
-      screen.innerHTML=`${res}`;
       break;
     case '-':
       res = subtract(a, b);
-      screen.innerHTML=`${res}`; 
       break;
     case '*':
-      res = multiply(a, b);
-      screen.innerHTML=`${res}`;
-
+      res = multiply(a, b); 
       break;
     case('/'):
       res = divide(a, b);
-      screen.innerHTML=`${res}`;
       break; 
-  } 
+  }  
+  console.log(`Result: ` + res);
+  screen.innerHTML = res;
+  return res;
 }
 
 // Display numbers on the screen
@@ -69,29 +68,37 @@ function displayNumber() {
   const digit = this.dataset.number;
   if (digitCount === 0) screen.innerHTML = '';
 
+  // Limit number of digits on the screen
   if (digitCount <= 9) {
     screen.innerHTML+= digit;
     digitCount++;
     enteredNumber = parseInt(screen.innerHTML);
   }
- 
+  console.log(`Entered number: ${enteredNumber}`);
   return enteredNumber;
 }
 
-
-// Save operation type
-function saveOperation() { 
-  (!res) ? firstNumber = enteredNumber : firstNumber = res; 
-  operation = this.dataset.operation;  
+// Save operation type and do operation 
+function saveOperation() {
+  operationCount++;  
+  if (operationCount === 1) {
+    firstNumber = enteredNumber; 
+  } else {
+    operate(firstNumber, enteredNumber, operation);
+    firstNumber = res; 
+  }
+  operation = this.dataset.operation;
   enteredNumber = 0;
   digitCount = 0; 
+  console.log(`Entered number: ${enteredNumber}, digit count: ${digitCount}`);
+
   console.log(`operation: ${operation}`);
 }
-
-
+ 
 // Event Listeners 
 numbers.forEach(number => number.addEventListener('click', displayNumber));
 operations.forEach(operation => operation.addEventListener('click', saveOperation)); 
-equal.addEventListener('click', operate);
+equal.addEventListener('click', operate); 
+
 
 
