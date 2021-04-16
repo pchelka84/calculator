@@ -4,16 +4,17 @@ const operations = document.querySelectorAll('[data-operation]');
 const equal = document.getElementById('equal');
 const clearAll = document.getElementById('clear-all');
 const clearLast = document.getElementById('clear-last');
- 
+const point =document.getElementById('point');
+
 let digitCount = 0;
 let operationCount = 0;
-let enteredNumber = 0;
-let firstNumber = 0;
+let enteredNumber;
+let firstNumber;
 screen.innerHTML = '0';
-let operation ='';
+let operation = null;
 let res = null;
 
-// Add two numbers
+// Add two numbers  
 function add(a, b) {
   console.log(a+b);
   return a+b;
@@ -50,8 +51,6 @@ function operate(a, b, operator) {
   // If only one number entered and '=' clicked
   if (!firstNumber) res = enteredNumber;
 
-  console.log(`Operate: first number = ${firstNumber}, second number = ${enteredNumber}, operator = ${operation}`)
-
   switch(operator) {
     case '+':
       res = add(a, b);
@@ -66,9 +65,11 @@ function operate(a, b, operator) {
       res = divide(a, b);
       break; 
   }  
-  console.log(`Result: ` + res);
   screen.innerHTML = res;
-  return res;
+  firstNumber = res;
+  enteredNumber = null;
+  console.log(`Operate after: Result: ${res}, first number ${firstNumber}, enteredNumber ${enteredNumber}, digit count ${digitCount}, operation count ${operationCount}`);
+
 }
 
 // Display numbers on the screen
@@ -84,31 +85,40 @@ function displayNumber() {
     } else {
       screen.innerHTML+= digit; 
     }
-    digitCount++;
-    console.log(digit); 
+    digitCount++; 
     enteredNumber = parseFloat(screen.innerHTML);
   }
-  console.log(`Entered number: ${enteredNumber}`); 
+  console.log(`Display Number: Entered number: ${enteredNumber}, first number ${firstNumber}, digit count ${digitCount}, res = ${res}, operator ${operation}, operation count ${operationCount}`); 
   return enteredNumber;
 }
 
 // Save operation type and do operation 
 function saveOperation() {
-  operationCount++;   
+  operationCount++;    
   if (operationCount === 1) {
     firstNumber = enteredNumber; 
   } else {
-    operate(firstNumber, enteredNumber, operation);
-    firstNumber = res; 
+    if (res) {
+      firstNumber = res;
+      res = null;
+    } else {
+      operate(firstNumber, enteredNumber, operation);
+      firstNumber = res; 
+      res = null; 
+    }
   }
   operation = this.dataset.operation;
-  enteredNumber = 0;
+  enteredNumber = null;
   digitCount = 0; 
   point.disabled = false;
-  console.log(`Entered number: ${enteredNumber}, digit count: ${digitCount}`);
 
-  console.log(`operation: ${operation}`);
+  console.log(`Save operation: Entered number: ${enteredNumber}, first number: ${firstNumber}, digit count: ${digitCount}, operation: ${operation}, operation count ${operationCount}, res ${res}`);
 }
+
+// Clear last entry 
+// function clearLastEntry() {
+//  if (firstNumber) 
+// }
 
 // Clear all and start clean
 function clearAllVariables() {
@@ -120,6 +130,7 @@ function clearAllVariables() {
   screen.innerHTML = '0';
   operation ='';
   res = null; 
+  console.log('All cleared')
 }
  
 // Event Listeners 
@@ -127,6 +138,7 @@ numbers.forEach(number => number.addEventListener('click', displayNumber));
 operations.forEach(operation => operation.addEventListener('click', saveOperation)); 
 equal.addEventListener('click', operate); 
 clearAll.addEventListener('click', clearAllVariables);
+// clearLast.addEventListener('click', clearLastEntry);
 
 
 
