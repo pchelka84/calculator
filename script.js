@@ -3,9 +3,8 @@ const numbers = document.querySelectorAll('[data-number]');
 const operations = document.querySelectorAll('[data-operation]');
 const equal = document.getElementById('equal');
 const clearAll = document.getElementById('clear-all');
-const clearLastEntry = document.getElementById('clear-last');
-const point =document.getElementById('point');
-
+const clearLast = document.getElementById('clear-last');
+ 
 let digitCount = 0;
 let operationCount = 0;
 let enteredNumber = 0;
@@ -114,6 +113,7 @@ function saveOperation() {
 // Clear all and start clean
 function clearAllVariables() {
   digitCount = 0;
+  point.disabled = false; 
   operationCount = 0;
   enteredNumber = 0;
   firstNumber = 0;
@@ -127,6 +127,7 @@ numbers.forEach(number => number.addEventListener('click', displayNumber));
 operations.forEach(operation => operation.addEventListener('click', saveOperation)); 
 equal.addEventListener('click', operate); 
 clearAll.addEventListener('click', clearAllVariables);
+
 
 
 
