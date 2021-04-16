@@ -46,6 +46,8 @@ function operate(a, b, operator) {
   a = firstNumber;
   b = enteredNumber;
   operator = operation;
+  // If only one number entered and '=' clicked
+  if (!firstNumber) res = enteredNumber;
 
   console.log(`Operate: first number = ${firstNumber}, second number = ${enteredNumber}, operator = ${operation}`)
 
