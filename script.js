@@ -73,7 +73,7 @@ function operate(a, b, operator) {
 // Display numbers on the screen
 function displayNumber() {
   const digit = this.dataset.number;
-  if (digitCount === 0) screen.innerHTML = '';
+  if (digitCount === 0 || res === 0) screen.innerHTML = '';
 
   // Limit number of digits on the screen
   if (digitCount <= 9) {
