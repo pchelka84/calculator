@@ -15,7 +15,6 @@
   width: 350px;
   border-radius: 5px;
   margin: 30px auto;
-  color: #fff;
   display: flex;
   flex-direction: column;
   box-shadow: 10px 15px 10px rgba(0, 0, 0, 0.3);
@@ -44,7 +43,9 @@
   height: 100%;
 }
 
-.key-container > div {
+.key-container > div,
+.key-container > button {
+  color: #fff;
   font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: center;
@@ -57,11 +58,16 @@
   border: 2px solid rgba(0, 0, 0, 0.7);
 }
 
-.key-container > div:active {
+.key-container > div:active,
+.key-container > button:active {
   background-color: rgba(255, 255, 255, 0.3);
   transform: scale(0.98);
   transition: transform 0.1s ease-out;
   border: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+.key-container > button:focus {
+  outline: 0;
 }
 
 .key-container > div#clear-all {

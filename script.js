@@ -4,6 +4,7 @@ const operations = document.querySelectorAll('[data-operation]');
 const equal = document.getElementById('equal');
 const clearAll = document.getElementById('clear-all');
 const clearLastEntry = document.getElementById('clear-last');
+const point =document.getElementById('point');
 
 let digitCount = 0;
 let operationCount = 0;
@@ -35,13 +36,14 @@ function multiply(a, b) {
 function divide(a, b) {
   if (b === 0) {
     digitCount = 0;  
+    point.disabled = false;
     return screen.innerHTML=`ERR`;  
   } else {
     return a % b !== 0 ? parseFloat((a/b).toFixed(2)) : a / b;
   } 
 }
 
-// Calls operator function on two numbers
+// Call operator function on two numbers
 function operate(a, b, operator) {
   a = firstNumber;
   b = enteredNumber;
@@ -77,17 +79,23 @@ function displayNumber() {
 
   // Limit number of digits on the screen
   if (digitCount <= 9) {
-    screen.innerHTML+= digit;
+    if (digit === ".") {
+      screen.innerHTML+= digit;
+      point.disabled = true;
+    } else {
+      screen.innerHTML+= digit; 
+    }
     digitCount++;
+    console.log(digit); 
     enteredNumber = parseFloat(screen.innerHTML);
   }
-  console.log(`Entered number: ${enteredNumber}`);
+  console.log(`Entered number: ${enteredNumber}`); 
   return enteredNumber;
 }
 
 // Save operation type and do operation 
 function saveOperation() {
-  operationCount++;  
+  operationCount++;   
   if (operationCount === 1) {
     firstNumber = enteredNumber; 
   } else {
@@ -97,6 +105,7 @@ function saveOperation() {
   operation = this.dataset.operation;
   enteredNumber = 0;
   digitCount = 0; 
+  point.disabled = false;
   console.log(`Entered number: ${enteredNumber}, digit count: ${digitCount}`);
 
   console.log(`operation: ${operation}`);
@@ -110,7 +119,7 @@ function clearAllVariables() {
   firstNumber = 0;
   screen.innerHTML = '0';
   operation ='';
-  res = null;
+  res = null; 
 }
  
 // Event Listeners 
