@@ -117,6 +117,7 @@ function saveOperation() {
 
 // Clear last entry 
 function clearLastEntry() {
+  
   // Remove operation if entered
   if (operation && !enteredNumber) { 
     enteredNumber = firstNumber;
@@ -124,11 +125,13 @@ function clearLastEntry() {
     operationCount--;
     operation = null; 
     screen.innerHTML = `${enteredNumber}`
+
     // Remove second number
   } else if (firstNumber && enteredNumber) {
     enteredNumber = null;
     screen.innerHTML = firstNumber;
     digitCount = 0;  
+
     // Remove entered/first number/operand
   } else { 
     enteredNumber = null;
