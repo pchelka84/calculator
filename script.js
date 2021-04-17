@@ -68,7 +68,8 @@ function operate(a, b, operator) {
   screen.innerHTML = res;
   firstNumber = res;
   enteredNumber = null;
-  console.log(`Operate after: Result: ${res}, first number ${firstNumber}, enteredNumber ${enteredNumber}, digit count ${digitCount}, operation count ${operationCount}`);
+  operation = null;
+  console.log(`Operate after: Result: ${res}, first number ${firstNumber}, enteredNumber ${enteredNumber}, digit count ${digitCount}, operation ${operation}, operation count ${operationCount}`);
 
 }
 
@@ -80,11 +81,11 @@ function displayNumber() {
     digitCount = 0;
     res = null; 
   }
-
-  const digit = this.dataset.number;
-
+ 
   // Dispaly nothing if entered nothing
   if (digitCount === 0 || res === 0) screen.innerHTML = '';
+
+  const digit = this.dataset.number;
 
   // Limit number of digits on the screen
   if (digitCount <= 9) {
@@ -96,7 +97,7 @@ function displayNumber() {
     }
     digitCount++; 
     enteredNumber = parseFloat(screen.innerHTML);
-  }
+  } 
   console.log(`Display Number: Entered number: ${enteredNumber}, first number ${firstNumber}, digit count ${digitCount}, res = ${res}, operator ${operation}, operation count ${operationCount}`); 
   return enteredNumber;
 }
