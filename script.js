@@ -8,8 +8,8 @@ const point =document.getElementById('point');
 
 let digitCount = 0;
 let operationCount = 0;
-let enteredNumber;
-let firstNumber;
+let enteredNumber = null;
+let firstNumber = null;
 screen.innerHTML = '0';
 let operation = null;
 let res = null;
@@ -116,19 +116,25 @@ function saveOperation() {
 }
 
 // Clear last entry 
-// function clearLastEntry() {
-//  if (firstNumber) 
-// }
+function clearLastEntry() {
+  // Remove operation if entered
+  if (operation) { 
+    enteredNumber = firstNumber;
+    firstNumber = null;
+    operationCount--;
+    operation = null; 
+  }
+}
 
 // Clear all and start clean
 function clearAllVariables() {
   digitCount = 0;
   point.disabled = false; 
-  operationCount = 0;
-  enteredNumber = 0;
+  operationCount = null;
+  enteredNumber = null;
   firstNumber = 0;
   screen.innerHTML = '0';
-  operation ='';
+  operation = null;
   res = null; 
   console.log('All cleared')
 }
@@ -138,7 +144,7 @@ numbers.forEach(number => number.addEventListener('click', displayNumber));
 operations.forEach(operation => operation.addEventListener('click', saveOperation)); 
 equal.addEventListener('click', operate); 
 clearAll.addEventListener('click', clearAllVariables);
-// clearLast.addEventListener('click', clearLastEntry);
+clearLast.addEventListener('click', clearLastEntry);
 
 
 
