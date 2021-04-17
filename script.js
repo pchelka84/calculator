@@ -74,7 +74,16 @@ function operate(a, b, operator) {
 
 // Display numbers on the screen
 function displayNumber() {
+  // Check if there is result
+  if (res) {
+    firstNumber = null;
+    digitCount = 0;
+    res = null; 
+  }
+
   const digit = this.dataset.number;
+
+  // Dispaly nothing if entered nothing
   if (digitCount === 0 || res === 0) screen.innerHTML = '';
 
   // Limit number of digits on the screen
@@ -117,7 +126,7 @@ function saveOperation() {
 
 // Clear last entry 
 function clearLastEntry() {
-  
+
   // Remove operation if entered
   if (operation && !enteredNumber) { 
     enteredNumber = firstNumber;
@@ -146,7 +155,7 @@ function clearAllVariables() {
   point.disabled = false; 
   operationCount = null;
   enteredNumber = null;
-  firstNumber = 0;
+  firstNumber = null;
   screen.innerHTML = '0';
   operation = null;
   res = null; 
