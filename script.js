@@ -17,19 +17,19 @@ screen.innerHTML = '0';
 // Add two numbers  
 function add(a, b) {
   console.log(a+b);
-  return a+b;
+  return Math.round((a+b) * 1000) / 1000;
 }
 
 // Subtract two numbers
 function subtract(a, b) {
   console.log(a-b);
-  return a-b;
+  return Math.round((a-b) * 1000) / 1000;
 }
 
 // Multiply two numbers
 function multiply(a, b) {
   console.log(a*b);
-  return a*b;
+  return Math.round((a*b) * 1000) / 1000;
 }
 
 // Divide two numbers
@@ -39,7 +39,7 @@ function divide(a, b) {
     point.disabled = false;
     return screen.innerHTML=`ERR`;  
   } else {
-    return a % b !== 0 ? parseFloat((a/b).toFixed(2)) : a / b;
+    return parseFloat(Math.round((a/b) * 1000) / 1000);
   } 
 }
 
@@ -110,7 +110,7 @@ function saveOperation() {
   if (operationCount === 1) {
     firstNumber = enteredNumber; 
 
-    // if it is not first operation, make prev result firstnumber
+    // if it is not first operation, operate and make prev result firstnumber
   } else {
     operate(firstNumber, enteredNumber, operation);
     firstNumber = res; 
