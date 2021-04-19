@@ -10,9 +10,9 @@ let digitCount = 0;
 let operationCount = 0;
 let enteredNumber = null;
 let firstNumber = null;
-screen.innerHTML = '0';
 let operation = null;
 let res = null;
+screen.innerHTML = '0';
 
 // Add two numbers  
 function add(a, b) {
@@ -48,8 +48,6 @@ function operate(a, b, operator) {
   a = firstNumber;
   b = enteredNumber;
   operator = operation;
-  // If only one number entered and '=' clicked
-  if (!firstNumber) res = enteredNumber;
 
   switch(operator) {
     case '+':
@@ -65,8 +63,17 @@ function operate(a, b, operator) {
       res = divide(a, b);
       break; 
   }  
-  screen.innerHTML = res;
-  firstNumber = res;
+  // Check if nothing entered and '=' clicked 
+  if (!enteredNumber && !firstNumber) {
+    screen.innerHTML = '0';
+    // If only one number entered and '=' clicked
+  } else if (!firstNumber) {
+    res = enteredNumber;
+    screen.innerHTML = res;
+  } else {
+    screen.innerHTML = res;
+    firstNumber = res;
+  }  
   enteredNumber = null;
   operation = null;
   console.log(`Operate after: Result: ${res}, first number ${firstNumber}, enteredNumber ${enteredNumber}, digit count ${digitCount}, operation ${operation}, operation count ${operationCount}`);
@@ -74,16 +81,9 @@ function operate(a, b, operator) {
 }
 
 // Display numbers on the screen
-function displayNumber() {
-  // Check if there is result
-  if (res) {
-    firstNumber = null;
-    digitCount = 0;
-    res = null; 
-  }
- 
-  // Dispaly nothing if entered nothing
-  if (digitCount === 0 || res === 0) screen.innerHTML = '';
+function displayNumber() { 
+  // Dispaly nothing if entered nothing or result is 0
+  if (digitCount === 0 || res === 0 ) screen.innerHTML = '';
 
   const digit = this.dataset.number;
 
@@ -104,18 +104,16 @@ function displayNumber() {
 
 // Save operation type and do operation 
 function saveOperation() {
-  operationCount++;    
+  operationCount++;  
+
+  // Check if it is first operation  
   if (operationCount === 1) {
     firstNumber = enteredNumber; 
+
+    // if it is not first operation, make prev result firstnumber
   } else {
-    if (res) {
-      firstNumber = res;
-      res = null;
-    } else {
-      operate(firstNumber, enteredNumber, operation);
-      firstNumber = res; 
-      res = null; 
-    }
+    operate(firstNumber, enteredNumber, operation);
+    firstNumber = res; 
   }
   operation = this.dataset.operation;
   enteredNumber = null;
@@ -125,7 +123,8 @@ function saveOperation() {
   console.log(`Save operation: Entered number: ${enteredNumber}, first number: ${firstNumber}, digit count: ${digitCount}, operation: ${operation}, operation count ${operationCount}, res ${res}`);
 }
 
-// Clear last entry 
+// Clear last entered number or operation
+// Clearing result witll reset calculator to start
 function clearLastEntry() {
 
   // Remove operation if entered
@@ -142,11 +141,15 @@ function clearLastEntry() {
     screen.innerHTML = firstNumber;
     digitCount = 0;  
 
-    // Remove entered/first number/operand
-  } else { 
+    // Remove entered/first number
+  } else if (enteredNumber && !firstNumber && !res) { 
     enteredNumber = null;
     screen.innerHTML = '0';
     digitCount = 0; 
+    
+    // Clear all to start if there is already res
+  } else if (res) {
+    clearAllVariables();
   }
 }
 
@@ -157,9 +160,9 @@ function clearAllVariables() {
   operationCount = null;
   enteredNumber = null;
   firstNumber = null;
-  screen.innerHTML = '0';
   operation = null;
   res = null; 
+  screen.innerHTML = '0';
   console.log('All cleared')
 }
  
