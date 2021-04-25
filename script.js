@@ -45,10 +45,6 @@ function divide(a, b) {
 
 // Call operator function on two numbers
 function operate(a, b, operator) {
-  a = firstNumber;
-  b = enteredNumber;
-  operator = operation;
-
   switch(operator) {
     case '+':
       res = add(a, b);
@@ -63,25 +59,14 @@ function operate(a, b, operator) {
       res = divide(a, b);
       break; 
   }  
-  // Check if nothing entered and '=' clicked 
-  if (!enteredNumber && !firstNumber) {
-    screen.innerHTML = '0';
-    // If only one number entered and '=' clicked
-  } else if (!firstNumber) {
-    res = enteredNumber;
-    screen.innerHTML = res;
-  } else {
-    screen.innerHTML = res;
-    firstNumber = res;
-  }  
-  enteredNumber = null;
-  operation = null;
+ 
   console.log(`Operate after: Result: ${res}, first number ${firstNumber}, enteredNumber ${enteredNumber}, digit count ${digitCount}, operation ${operation}, operation count ${operationCount}`);
 
 }
 
 // Display numbers on the screen
 function displayNumber() { 
+  res = null;
   // Dispaly nothing if entered nothing or result is 0
   if (digitCount === 0 || res === 0 ) screen.innerHTML = '';
 
@@ -153,11 +138,31 @@ function clearLastEntry() {
   }
 }
 
+// Calculate result when '=' clicked
+function evaluate() { 
+  operate(firstNumber, enteredNumber, operation); 
+  // Check if nothing entered and '=' clicked 
+  if (!enteredNumber && !firstNumber) {
+    screen.innerHTML = '0';
+    enteredNumber = null; 
+    digitCount = 0;
+    // If only one number entered and '=' clicked
+  } else if (!firstNumber) { 
+    screen.innerHTML = enteredNumber;
+  } else {
+    screen.innerHTML = res;
+    firstNumber = null;
+    enteredNumber = null;
+    digitCount = 0; 
+    operation = null; 
+  }   
+}
+
 // Clear all and start clean
 function clearAllVariables() {
   digitCount = 0;
   point.disabled = false; 
-  operationCount = null;
+  operationCount = 0;
   enteredNumber = null;
   firstNumber = null;
   operation = null;
@@ -165,11 +170,12 @@ function clearAllVariables() {
   screen.innerHTML = '0';
   console.log('All cleared')
 }
+
  
 // Event Listeners 
 numbers.forEach(number => number.addEventListener('click', displayNumber));
 operations.forEach(operation => operation.addEventListener('click', saveOperation)); 
-equal.addEventListener('click', operate); 
+equal.addEventListener('click', evaluate); 
 clearAll.addEventListener('click', clearAllVariables);
 clearLast.addEventListener('click', clearLastEntry);
 
