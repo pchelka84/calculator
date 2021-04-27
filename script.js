@@ -72,7 +72,14 @@ function displayNumber() {
 
   const digit = this.dataset.number;
 
-  // Limit number of digits on the screen
+  limitNumberOfDigits(digit);
+
+  console.log(`Display Number: Entered number: ${enteredNumber}, first number ${firstNumber}, digit count ${digitCount}, res = ${res}, operator ${operation}, operation count ${operationCount}`); 
+  return enteredNumber;
+}
+
+// Limit number of digits on the screen
+function limitNumberOfDigits(digit) {
   if (digitCount <= 9) {
     if (digit === ".") {
       screen.innerHTML+= digit;
@@ -83,8 +90,6 @@ function displayNumber() {
     digitCount++; 
     enteredNumber = parseFloat(screen.innerHTML);
   } 
-  console.log(`Display Number: Entered number: ${enteredNumber}, first number ${firstNumber}, digit count ${digitCount}, res = ${res}, operator ${operation}, operation count ${operationCount}`); 
-  return enteredNumber;
 }
 
 // Save operation type and do operation 
@@ -118,7 +123,7 @@ function clearLastEntry() {
     firstNumber = null;
     operationCount--;
     operation = null; 
-    screen.innerHTML = `${enteredNumber}`
+    screen.innerHTML = enteredNumber;
 
     // Remove second number
   } else if (firstNumber && enteredNumber) {
