@@ -80,6 +80,7 @@ function displayNumber() {
 
 // Limit number of digits on the screen
 function limitNumberOfDigits(digit) {
+  
   if (digitCount <= 9) {
     if (digit === ".") {
       screen.innerHTML+= digit;
@@ -90,10 +91,29 @@ function limitNumberOfDigits(digit) {
     digitCount++; 
     enteredNumber = parseFloat(screen.innerHTML);
   } 
+
+  console.log(`Limit number of digits: Entered number: ${enteredNumber}, first number ${firstNumber}, digit count ${digitCount}, res = ${res}, operator ${operation}, operation count ${operationCount}`); 
+  return enteredNumber;
+}
+
+// Keyboard entry
+function keyboardEntry(e) {
+  console.log(e.key)
+  if (e.key >= 0 && e.key <= 9) {
+    if (digitCount === 0) screen.innerHTML = '';
+    limitNumberOfDigits(e.key)
+  };
+  // // Doesn't support operations keys yet (Shift)
+  // if (e.key === '+' || e.key === '-' || e.key === '/' || e.key === '*') saveOperation();
+  if (e.key === 'Enter') evaluate();
+  if (e.key === 'Delete' || e.key === 'Escape') clearAllVariables();
+  if (e.key === 'Backspace') clearLastEntry();
+
+  
 }
 
 // Save operation type and do operation 
-function saveOperation() {
+function saveOperation(e) {
   operationCount++;  
 
   // Check if it is first operation  
@@ -105,7 +125,8 @@ function saveOperation() {
     operate(firstNumber, enteredNumber, operation);
     firstNumber = res; 
   }
-  operation = this.dataset.operation;
+  // operation = this.dataset.operation;
+  e.key ? operation = e.key : operation = this.dataset.operation;
   enteredNumber = null;
   digitCount = 0; 
   point.disabled = false;
@@ -183,6 +204,7 @@ operations.forEach(operation => operation.addEventListener('click', saveOperatio
 equal.addEventListener('click', evaluate); 
 clearAll.addEventListener('click', clearAllVariables);
 clearLast.addEventListener('click', clearLastEntry);
+window.addEventListener('keydown', keyboardEntry);
 
 
 
