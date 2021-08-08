@@ -37,6 +37,8 @@ function divide(a, b) {
   if (b === 0) {
     digitCount = 0;  
     point.disabled = false;
+    operationCount = 0;
+    res = null;
     return screen.innerHTML=`ERR`;  
   } else {
     return parseFloat(Math.round((a/b) * 1000) / 1000);
@@ -59,6 +61,8 @@ function operate(a, b, operator) {
       res = divide(a, b);
       break; 
   }  
+
+  screen.innerHTML = res;
  
   console.log(`Operate after: Result: ${res}, first number ${firstNumber}, enteredNumber ${enteredNumber}, digit count ${digitCount}, operation ${operation}, operation count ${operationCount}`);
 
@@ -114,7 +118,10 @@ function keyboardEntry(e) {
 
 // Save operation type and do operation 
 function saveOperation(e) {
-  operationCount++;  
+  operationCount++;   
+
+  // Check if result === 'ERR'
+  if (res === 'ERR') res = null;
 
   // Check if it is first operation  
   if (operationCount === 1) {
