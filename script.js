@@ -114,7 +114,7 @@ function keyboardEntry(e) {
   if (e.key === '.') document.getElementById('point').click();
   if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
     checkOperationCount();
-    
+
     operation = e.key;
     enteredNumber = null;
     digitCount = 0;
@@ -163,9 +163,7 @@ function clearLastEntry() {
 
     // Remove entered/first number
   } else if (enteredNumber && !firstNumber && !res) { 
-    enteredNumber = null;
-    screen.innerHTML = '0';
-    digitCount = 0; 
+    resetEnteredNumber();
     
     // Clear all to start if there is already res
   } else if (res) {
@@ -178,9 +176,8 @@ function evaluate() {
   operate(firstNumber, enteredNumber, operation); 
   // Check if nothing entered and '=' clicked 
   if (!enteredNumber && !firstNumber) {
-    screen.innerHTML = '0';
-    enteredNumber = null; 
-    digitCount = 0;
+    resetEnteredNumber();
+
     // If only one number entered and '=' clicked
   } else if (!firstNumber) { 
     screen.innerHTML = enteredNumber;
@@ -195,15 +192,19 @@ function evaluate() {
 
 // Clear all and start clean
 function clearAllVariables() {
-  digitCount = 0;
+  resetEnteredNumber();
   point.disabled = false; 
   operationCount = 0;
-  enteredNumber = null;
   firstNumber = null;
   operation = null;
-  res = null; 
-  screen.innerHTML = '0';
+  res = null;  
   console.log('All cleared')
+}
+
+function resetEnteredNumber() {
+  enteredNumber = null;
+  digitCount = 0;
+  screen.innerHTML = '0';
 }
 
  
