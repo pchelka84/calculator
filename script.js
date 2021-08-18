@@ -4,7 +4,7 @@ const operations = document.querySelectorAll('[data-operation]');
 const equal = document.getElementById('equal');
 const clearAll = document.getElementById('clear-all');
 const clearLast = document.getElementById('clear-last');
-const point =document.getElementById('point');
+const point = document.getElementById('point');
 
 let digitCount = 0;
 let operationCount = 0;
@@ -102,43 +102,48 @@ function limitNumberOfDigits(digit) {
 
 // Keyboard entry
 function keyboardEntry(e) {
-  console.log(e.key)
+ 
   if (e.key >= 0 && e.key <= 9) {
     if (digitCount === 0) screen.innerHTML = '';
     limitNumberOfDigits(e.key)
   };
-  // // Doesn't support operations keys yet (Shift)
-  // if (e.key === '+' || e.key === '-' || e.key === '/' || e.key === '*') saveOperation();
+
   if (e.key === 'Enter') evaluate();
   if (e.key === 'Delete' || e.key === 'Escape') clearAllVariables();
   if (e.key === 'Backspace') clearLastEntry();
+  if (e.key === '.') document.getElementById('point').click();
+  if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+    console.log(`Operation pressed ${e.key}`);
+    operationCount++;
 
-  
+    // Check if it is first operation 
+    if (operationCount === 1) {
+      firstNumber = enteredNumber;
+    } else {
+      operate(firstNumber, enteredNumber, operation);
+      firstNumber = res;
+    }
+    operation = e.key;
+    enteredNumber = null;
+    digitCount = 0;
+    point.disabled = false; 
+  }
 }
 
-// Save operation type and do operation 
-function saveOperation(e) {
-  operationCount++;   
+function saveOperator() { 
+  operationCount++;
 
-  // Check if result === 'ERR'
-  if (res === 'ERR') res = null;
-
-  // Check if it is first operation  
+  // Check if it is first operation 
   if (operationCount === 1) {
-    firstNumber = enteredNumber; 
-
-    // if it is not first operation, operate and make prev result firstnumber
+    firstNumber = enteredNumber;
   } else {
     operate(firstNumber, enteredNumber, operation);
-    firstNumber = res; 
+    firstNumber = res;
   }
-  // operation = this.dataset.operation;
-  e.key ? operation = e.key : operation = this.dataset.operation;
+  operation = this.dataset.operation;
   enteredNumber = null;
-  digitCount = 0; 
+  digitCount = 0;
   point.disabled = false;
-
-  console.log(`Save operation: Entered number: ${enteredNumber}, first number: ${firstNumber}, digit count: ${digitCount}, operation: ${operation}, operation count ${operationCount}, res ${res}`);
 }
 
 // Clear last entered number or operation
@@ -207,7 +212,7 @@ function clearAllVariables() {
  
 // Event Listeners 
 numbers.forEach(number => number.addEventListener('click', displayNumber));
-operations.forEach(operation => operation.addEventListener('click', saveOperation)); 
+operations.forEach(operation => operation.addEventListener('click', saveOperator)); 
 equal.addEventListener('click', evaluate); 
 clearAll.addEventListener('click', clearAllVariables);
 clearLast.addEventListener('click', clearLastEntry);
