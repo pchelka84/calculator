@@ -113,16 +113,8 @@ function keyboardEntry(e) {
   if (e.key === 'Backspace') clearLastEntry();
   if (e.key === '.') document.getElementById('point').click();
   if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
-    console.log(`Operation pressed ${e.key}`);
-    operationCount++;
-
-    // Check if it is first operation 
-    if (operationCount === 1) {
-      firstNumber = enteredNumber;
-    } else {
-      operate(firstNumber, enteredNumber, operation);
-      firstNumber = res;
-    }
+    checkOperationCount();
+    
     operation = e.key;
     enteredNumber = null;
     digitCount = 0;
@@ -131,7 +123,16 @@ function keyboardEntry(e) {
 }
 
 function saveOperator() { 
-  operationCount++;
+  checkOperationCount();
+
+  operation = this.dataset.operation;
+  enteredNumber = null;
+  digitCount = 0;
+  point.disabled = false;
+}
+
+function checkOperationCount() { 
+  operationCount++; 
 
   // Check if it is first operation 
   if (operationCount === 1) {
@@ -140,10 +141,6 @@ function saveOperator() {
     operate(firstNumber, enteredNumber, operation);
     firstNumber = res;
   }
-  operation = this.dataset.operation;
-  enteredNumber = null;
-  digitCount = 0;
-  point.disabled = false;
 }
 
 // Clear last entered number or operation
