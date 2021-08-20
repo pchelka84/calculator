@@ -83,18 +83,23 @@ function displayNumber() {
 }
 
 // Limit number of digits on the screen
-function limitNumberOfDigits(digit) {
+function limitNumberOfDigits(digit) { 
+    if (digitCount <= 9) {
+      // Handle the case when we have number starting with '0.'
+      if (digitCount === 0 && digit === '.') {
+        screen.innerHTML = `0${digit}`;
+        point.disabled = true;
   
-  if (digitCount <= 9) {
-    if (digit === ".") {
-      screen.innerHTML+= digit;
-      point.disabled = true;
-    } else {
-      screen.innerHTML+= digit; 
+        // Handle the case for other decimal numbers
+      } else if (digit === '.') {
+        screen.innerHTML+= digit;
+        point.disabled = true;
+      } else {
+        screen.innerHTML+= digit; 
+      }  
+      digitCount++; 
+      enteredNumber = parseFloat(screen.innerHTML); 
     }
-    digitCount++; 
-    enteredNumber = parseFloat(screen.innerHTML);
-  } 
 
   console.log(`Limit number of digits: Entered number: ${enteredNumber}, first number ${firstNumber}, digit count ${digitCount}, res = ${res}, operator ${operation}, operation count ${operationCount}`); 
   return enteredNumber;
