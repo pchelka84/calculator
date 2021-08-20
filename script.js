@@ -37,9 +37,8 @@ function divide(a, b) {
   if (b === 0) {
     digitCount = 0;  
     point.disabled = false;
-    operationCount = 0;
-    res = null;
-    return screen.innerHTML=`ERR`;  
+    operationCount = 0;  
+    return screen.innerHTML=`CAN'T ÷  BY 0`;  
   } else {
     return parseFloat(Math.round((a/b) * 1000) / 1000);
   } 
@@ -62,6 +61,7 @@ function operate(a, b, operator) {
       break; 
   }  
 
+  // TO DO shall look closely into it 
   screen.innerHTML = res;
  
   console.log(`Operate after: Result: ${res}, first number ${firstNumber}, enteredNumber ${enteredNumber}, digit count ${digitCount}, operation ${operation}, operation count ${operationCount}`);
@@ -133,13 +133,13 @@ function saveOperator() {
 
 function checkOperationCount() { 
   operationCount++; 
-
+ 
   // Check if it is first operation 
   if (operationCount === 1) {
     firstNumber = enteredNumber;
-  } else {
+  } else { 
     operate(firstNumber, enteredNumber, operation);
-    firstNumber = res;
+    firstNumber = res; 
   }
 }
 
@@ -172,8 +172,14 @@ function clearLastEntry() {
 }
 
 // Calculate result when '=' clicked
-function evaluate() { 
-  operate(firstNumber, enteredNumber, operation); 
+function evaluate() {  
+  // Check if res === 'Can't divide by 0'
+  if (typeof res === 'string') { 
+    clearAllVariables();
+  } else {
+    operate(firstNumber, enteredNumber, operation);
+  }
+
   // Check if nothing entered and '=' clicked 
   if (!enteredNumber && !firstNumber) {
     resetEnteredNumber();
@@ -210,7 +216,7 @@ function resetEnteredNumber() {
  
 // Event Listeners 
 numbers.forEach(number => number.addEventListener('click', displayNumber));
-operations.forEach(operation => operation.addEventListener('click', saveOperator)); 
+operations.forEach(operation => operation.addEventListener('click', saveOperator));   
 equal.addEventListener('click', evaluate); 
 clearAll.addEventListener('click', clearAllVariables);
 clearLast.addEventListener('click', clearLastEntry);
