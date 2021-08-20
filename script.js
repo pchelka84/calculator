@@ -108,7 +108,7 @@ function limitNumberOfDigits(digit) {
 // Keyboard entry
 function keyboardEntry(e) {
  
-  if (e.key >= 0 && e.key <= 9) {
+  if (e.key >= 0 && e.key <= 9 && !(e.key = 'Space character')) {
     if (digitCount === 0) screen.innerHTML = '';
     limitNumberOfDigits(e.key)
   };
